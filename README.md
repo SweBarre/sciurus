@@ -30,18 +30,24 @@ class DevelopmentConfig(BaseConfig):
     } 
 
 * init the sciurus database
+
 python manage.py db init sciurus
 
 * add the first domain
+
 python manage.py domain add example.tld
 
 * add the first super admin
+
 python manage.py user add super@example.tld -s -e
 
 * start the backend 
+
 python manage.py runserver
 
 * start the frontend
+
 cd www-root
+
 python -m SimpleHTTPServer
 
