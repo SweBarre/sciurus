@@ -17,6 +17,9 @@ def add(email, enabled=False, admin=False, super_admin=False, first_name=None , 
         return
     
     tmpU = User.query.filter_by(email=email).first()
+    admin_access = 0
+    for accessRight in security.AccessRights:
+        admin_access = admin_access | accessRight.value
     if tmpU:
         print('User {email} already exists'.format(email=email))
     else:
@@ -34,14 +37,14 @@ def add(email, enabled=False, admin=False, super_admin=False, first_name=None , 
                 last_name=last_name)
 
         if super_admin:
-            user.super_admin = security.AccessRights.ALL.value
+            user.super_admin = admin_access
             print('User {email} has been added as super-admin'.format(email=email))
         db.session.add(user)
         db.session.commit()
         if admin:
             adminmap = AdminMap(user_id=user.id,
                                 domain_id=tmpDomain.id,
-                                access=security.AccessRights.ALL.value
+                                access=admin_access
                                 )
             db.session.add(adminmap)
             db.session.commit()
