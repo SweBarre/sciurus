@@ -1,6 +1,7 @@
 sciurus.controller('UserInstanceCtrl', function($scope, $modalInstance, User, user) {
     
     $scope.user = user;
+    $scope.modalUser = angular.copy($scope.user);
     $scope.currentAdminDomain = false;
     $scope.editUser = false;
 
@@ -17,9 +18,11 @@ sciurus.controller('UserInstanceCtrl', function($scope, $modalInstance, User, us
     };
 
     $scope.save = function() {
-        User.put({email:$scope.user.email}, $scope.user).
+        User.put({email:$scope.modalUser.email}, $scope.modalUser).
          $promise.then(function(response){
              $scope.user=response.user;
+             user = $scope.user;
+             $scope.modalUser = angular.copy($scope.user);
              $modalInstance.close($scope.user);
          });
         $scope.editUser = false;

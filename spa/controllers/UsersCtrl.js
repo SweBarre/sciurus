@@ -11,7 +11,9 @@ sciurus.controller('UsersCtrl', function($scope, $modal, User) {
 
 
     $scope.viewUser = function(user) {
-        var $modalInstance = $modal.open({
+        user = user;
+
+        $modalInstance = $modal.open({
             animation: true,
             backdrop: true,
             templateUrl: "partials/userModal.html",
@@ -24,9 +26,10 @@ sciurus.controller('UsersCtrl', function($scope, $modal, User) {
             }
         });
 
-        //$modalInstance.result.then(function(user) {
-        //    console.log(user);
-        //});
+        $modalInstance.result.then(function(changedUser) {
+            user = angular.copy(changedUser);
+            console.log(changedUser);
+        });
     }
 
 });
