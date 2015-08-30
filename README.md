@@ -1,6 +1,9 @@
 virtualenv venv
+
 . venv/bin/activate
+
 pip install -r requirements.txt
+
 npm install
 
 cp spa/config.js.template spa/config.js
