@@ -1,0 +1,10 @@
+*.pyc
+*.swp
+*.db
+
+/app/config.py
+/spa/config.js
+
+/node_modules/
+/venv/
+/www-root/assets/

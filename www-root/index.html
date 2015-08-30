@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html ng-app="sciurus" lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="icon" href="favicon.ico">
+
+<title>Sciurus Mail</title>
+
+<link href="assets/css/bootstrap.min.css" rel="stylesheet">
+<link href="css/sciurus.css" rel="stylesheet">
+
+<script src="assets/js/angular.min.js"></script>
+<script src="assets/js/angular-route.min.js"></script>
+<script src="assets/js/angular-flash.min.js"></script>
+<script src="assets/js/angular-animate.min.js"></script>
+<script src="assets/js/ngStorage.min.js"></script>
+<script src="assets/js/ui-bootstrap-tpls.min.js"></script>
+<script src="assets/js/angular-resource.min.js"></script>
+<script src="assets/js/sciurus.js"></script>
+
+
+</head>
+
+<body ng-controller="ApplicationController">
+
+<!-- Static navbar -->
+<nav ng-show="currentUser" class="navbar navbar-default navbar-static-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#/">Sciurus Mail</a>
+    </div>
+
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li ng-repeat="menuItem in userMenu">
+        <a href="{{ menuItem.link }}">{{ menuItem.caption }}</a>
+        </li>
+        <li>
+        <div ng-show="currentUser.is_admin" class="btn-group" dropdown>
+          <button type="button" class="btn btn-default navbar-btn dropdown-toggle" dropdown-toggle>Admin</button>
+          <ul class="dropdown-menu" role="menu">
+            <li ng-repeat="menuItem in adminMenu">
+            <a href="{{ menuItem.link }}">{{ menuItem.caption }}</a>
+            </li>
+          </ul>
+        </div> <!-- ng-show="currentUser.is_admin-->
+        </li>
+      </ul>
+      <div class="col-sm-3 col-md-3">
+        <form class="navbar-form" role="search">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Filter" ng-model='filterKeyword' />
+          </div>
+        </form>
+      </div>        
+
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#/logout">Logout</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</nav>
+
+<div flash-message="5000" ></div>
+<div class="container">
+  <div ng-view></div>
+</div>
+</body>
+</html>
+

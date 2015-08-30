@@ -1,0 +1,46 @@
+<table class="table table-borded">
+  <thead>
+    <th>
+      <a href="#" ng-click="$event.preventDefault(); orderBy='email'; reverseOrder=!reverseOrder">
+        Email 
+        <span ng-show="orderBy=='email'">
+          <span ng-show="!reverseOrder" class="glyphicon glyphicon-chevron-down"></span>
+          <span ng-show="reverseOrder" class="glyphicon glyphicon-chevron-up"></span>
+        </span>
+      </a>
+    </th>
+    <th>Active</th>
+    <th>
+      <a href="#" ng-click="$event.preventDefault(); orderBy='first_name'; reverseOrder=!reverseOrder">
+      First name
+      <span ng-show="orderBy=='first_name'">
+          <span ng-show="!reverseOrder" class="glyphicon glyphicon-chevron-down"></span>
+          <span ng-show="reverseOrder" class="glyphicon glyphicon-chevron-up"></span>
+        </span>
+      </a>
+    </th>
+    <th>
+      <a href="#" ng-click="$event.preventDefault(); orderBy='last_name'; reverseOrder=!reverseOrder">
+      Last name
+      <span ng-show="orderBy=='last_name'">
+          <span ng-show="!reverseOrder" class="glyphicon glyphicon-chevron-down"></span>
+          <span ng-show="reverseOrder" class="glyphicon glyphicon-chevron-up"></span>
+        </span>
+      </a>
+    </th>
+    <th>Roles</th>
+  </thead>
+  <tbody>
+    <tr ng-repeat='user in users | filter: filterKeyword | orderBy:orderBy:reverseOrder'>
+      <td><a href="#" ng-click="$event.preventDefault(); viewUser(user)">{{ user.email }}</a></td>
+      <td><input type="checkbox" ng-model="user.enabled" disabled readonly></td>
+      <td>{{ user.first_name }}</td>
+      <td>{{ user.last_name }}</td>
+      <td>
+        <span ng-show="user.is_admin" class="label label-default">Admin</span>
+        <span ng-show="user.super_admin" class="label label-success">Super</span>
+      </td>
+    </tr>
+  </tbody>
+
+</table>

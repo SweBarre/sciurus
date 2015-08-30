@@ -1,0 +1,3 @@
+sciurus.constant('CONFIG', {
+        'apiURL' : '/api/v1/'
+});
