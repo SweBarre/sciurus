@@ -21,7 +21,7 @@ python manage.py shell
 
 * change development config to use sqlite
 class DevelopmentConfig(BaseConfig):                                            
-    SECRET_KEY = 'e4>xRSG15dSMFn*FY^#pR&[^3ZK?TS_Kyz32kaS@Aj#(>oM<L+'           
+    SECRET_KEY = '......'           
     DEBUG = True                                                                
     SQLALCHEMY_DATABASE_URI = 'sqlite:////tmp/sciurus.db'    
     SQLALCHEMY_BINDS = {                                                        
