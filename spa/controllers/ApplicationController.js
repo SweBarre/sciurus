@@ -1,8 +1,11 @@
-sciurus.controller('ApplicationController', function ($scope, $rootScope, $location, Session) {
+sciurus.controller('ApplicationController', function ($scope, $rootScope, $location, AuthService, Session) {
 
     Session.load();
 
     $rootScope.currentUser = Session.user;
+    $rootScope.isAuthorized = function(check, domain) {
+        return AuthService.isAuthorized(check, domain);
+    };
 
     $rootScope.setCurrentUser = function (user) {
         $rootScope.currentUser = user;
@@ -22,5 +25,10 @@ sciurus.controller('ApplicationController', function ($scope, $rootScope, $locat
     ];
 
     $scope.filterKeyword = "";
+
+    $scope.redirect = function(path) {
+        console.log('redirecting: '+path);
+        $location.path(path);
+    };
 
 });

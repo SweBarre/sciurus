@@ -239,3 +239,8 @@ body {
 	vertical-align: middle;
 	white-space: pre;
 }
+
+.avatar {
+	max-height: 100px;
+	max-width: 100px;
+}

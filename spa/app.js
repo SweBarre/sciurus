@@ -18,9 +18,14 @@ var sciurus = angular.module("sciurus", ['ngRoute', 'ngStorage', 'ui.bootstrap',
         controller  : 'LogoutCtrl'
     })
 
-    .when('/users/', {
+    .when('/users', {
         templateUrl : 'users.html',
         controller  : 'UsersCtrl'
+    })
+
+    .when('/users/:userEmail', {
+        templateUrl : 'user.html',
+        controller  : 'UserDetailCtrl'
     })
 
     .otherwise({

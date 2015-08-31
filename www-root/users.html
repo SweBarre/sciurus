@@ -32,7 +32,7 @@
   </thead>
   <tbody>
     <tr ng-repeat='user in users | filter: filterKeyword | orderBy:orderBy:reverseOrder'>
-      <td><a href="#" ng-click="$event.preventDefault(); viewUser(user)">{{ user.email }}</a></td>
+      <td><a href="#/users/{{ user.email }}">{{ user.email }}</a></td>
       <td><input type="checkbox" ng-model="user.enabled" disabled readonly></td>
       <td>{{ user.first_name }}</td>
       <td>{{ user.last_name }}</td>

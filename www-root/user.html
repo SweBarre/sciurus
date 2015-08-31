@@ -1,0 +1,107 @@
+<div class="container">
+  <div class="row">
+    <!-- left column -->
+    <div class="col-md-3">
+      <div class="text-center">
+        <img src="images/user.png" class="avatar img-circle" alt="avatar">
+        <!--
+        <h6>Upload a different photo...</h6>
+
+        <input class="form-control" type="file">
+        -->
+      </div>
+      <div class="text-center">
+        <h4>{{ user.email }}</h4>
+      </div>
+      <div class="text-center">
+        <p>
+        <button ng-click="redirect('/quarantine/'+user.email)" class="btn btn-primary" type="button">
+          Quarantine <span class="badge">4</span>
+        </button>
+        </p>
+      </div>
+      <div class="text-center" ng-show="(isAuthorized('USER_EDIT') || currentUser.email==user.email)">
+        <input ng-click="reset_password()" value="change password" class="btn btn-primary" type="button">
+      </div>
+      <p>form pristine: {{userForm.$pristine}}</p>
+      <p>form dirty   : {{userForm.$dirty}}</p>
+      <p>etag: {{user.etag}}</p>
+    </div>
+
+    <!-- edit form column -->
+    <div class="col-md-9">
+      <h3>Personal info</h3>
+
+      <form name="userForm" class="form-horizontal" role="form">
+        <div class="form-group">
+          <label class="col-lg-3 control-label">First name:</label>
+          <div class="col-lg-8">
+            <input class="form-control" ng-model="user.first_name" type="text">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-lg-3 control-label">Last name:</label>
+          <div class="col-lg-8">
+            <input class="form-control" ng-model="user.last_name" type="text">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-lg-3 control-label">Enabled:</label>
+          <div class="col-lg-8">
+            <button ng-show="user.enabled" ng-click="user.enabled=false; userForm.$setDirty()" ng-disabled="!currentUser.is_admin" class="btn btn-success" type="button"> Enabled</button>
+            <button ng-hide="user.enabled" ng-click="user.enabled=true; userForm.$setDirty()" ng-disabled="!currentUser.is_admin" class="btn btn-danger" type="button"> Disabled</button>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-lg-3 control-label">Email:</label>
+          <div class="col-lg-8">
+            <input class="form-control" value="janesemail@gmail.com" type="text">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-lg-3 control-label">Time Zone:</label>
+          <div class="col-lg-8">
+            <div class="ui-select">
+              <select id="user_time_zone" class="form-control">
+                <option value="Hawaii">(GMT-10:00) Hawaii</option>
+                <option value="Alaska">(GMT-09:00) Alaska</option>
+                <option value="Pacific Time (US &amp; Canada)">(GMT-08:00) Pacific Time (US &amp; Canada)</option>
+                <option value="Arizona">(GMT-07:00) Arizona</option>
+                <option value="Mountain Time (US &amp; Canada)">(GMT-07:00) Mountain Time (US &amp; Canada)</option>
+                <option value="Central Time (US &amp; Canada)" selected="selected">(GMT-06:00) Central Time (US &amp; Canada)</option>
+                <option value="Eastern Time (US &amp; Canada)">(GMT-05:00) Eastern Time (US &amp; Canada)</option>
+                <option value="Indiana (East)">(GMT-05:00) Indiana (East)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-3 control-label">Username:</label>
+          <div class="col-md-8">
+            <input class="form-control" value="janeuser" type="text">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-3 control-label">Password:</label>
+          <div class="col-md-8">
+            <input class="form-control" value="11111122333" type="password">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-3 control-label">Confirm password:</label>
+          <div class="col-md-8">
+            <input class="form-control" value="11111122333" type="password">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-3 control-label"></label>
+          <div class="col-md-8">
+            <input ng-hide="userForm.$pristine" ng-click="save()" class="btn btn-success" value="Save Changes" type="button">
+            <span></span>
+            <input ng-show="userForm.$dirty" ng-click="reset()" class="btn btn-primary" value="Reset" type="button">
+          </div>
+        </div>
+      </form>
+    </div>
+  </div> <!-- row -->
+</div> <!-- container -->

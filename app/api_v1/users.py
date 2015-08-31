@@ -41,7 +41,7 @@ class SingleUser(Resource):
 
         user = User.query.filter_by(email=email).first()
         if not user:
-            abort(404, "User not found")
+            abort(404)
         return jsonify({'user':user.to_dict()})
 
     def put(self, email):

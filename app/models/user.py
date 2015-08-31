@@ -6,7 +6,7 @@ from itsdangerous import BadSignature, SignatureExpired
 from flask import current_app, abort
 from sqlalchemy import or_
 from base import SciurusMixin
-from ..core import security
+from ..core import security, get_email_domain
 
 from .. import db
 
@@ -17,9 +17,9 @@ class User(SciurusMixin, db.Model):
     __no_dict__ = ['password_hash']
     __no_etag__ = ['password_hash', 'last_login']
     id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(254), nullable=False, unique=True, index=True)
-    first_name = db.Column(db.String(254), nullable=True)
-    last_name = db.Column(db.String(254), nullable=True)
+    email = db.Column(db.Unicode(254), nullable=False, unique=True, index=True)
+    first_name = db.Column(db.Unicode(254), nullable=True)
+    last_name = db.Column(db.Unicode(254), nullable=True)
     password_hash = db.Column(db.String(128), nullable=False)
     enabled = db.Column(db.Boolean, default=False)
     admin_domains = db.relationship('AdminMap', backref='admin', lazy='dynamic')
@@ -65,16 +65,19 @@ class User(SciurusMixin, db.Model):
             return_dict['admin'] = False
             return_dict['is_admin'] = False
         else:
-            domains_list=[]
+            #domains_list=[]
+            domains_dict={}
             return_dict['is_admin'] = True
             for admin_map in admin_maps:
-                domain_dict={}
-                domain_dict['name'] = admin_map.domain.name
-                domain_dict['access'] = security.create_admin_list(admin_map.access)
-                domains_list.append(domain_dict)
-            return_dict['admin'] = domains_list
-        # Create the super_admin list
+                #domain_dict={}
+                #domain_dict['name'] = admin_map.domain.name
+                #domain_dict['access'] = security.create_admin_list(admin_map.access)
+                #domains_list.append(domain_dict)
+                domains_dict[admin_map.domain.name]=security.create_admin_list(admin_map.access)
+            return_dict['admin'] = domains_dict
+            # Create the super_admin list
         return_dict['super_admin'] = security.create_admin_list(self.super_admin)
         if return_dict['super_admin']:
             return_dict['is_admin'] = True
+        return_dict['domain'] = get_email_domain(self.email)
         return return_dict

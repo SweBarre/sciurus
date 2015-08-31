@@ -38,16 +38,18 @@ class SciurusMixin(object):
     @property
     def etag(self):
         columns = self.__table__.columns.keys()
-        string = ""
+        etag = ""
         for key in columns:
             if key in self.__no_etag__:
                 continue
             value = getattr(self, key)
             if isinstance(value, datetime):
                 value = value.isoformat()
-            string += str(value)
+            if isinstance(value, unicode):
+                value = value.encode('utf8')
+            etag += str(value)
         return_hash = sha1()
-        return_hash.update(string)
+        return_hash.update(etag)
         return return_hash.hexdigest()
 
     @etag.setter
