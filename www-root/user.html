@@ -21,7 +21,15 @@
         </p>
       </div>
       <div class="text-center" ng-show="(isAuthorized('USER_EDIT') || currentUser.email==user.email)">
-        <input ng-click="reset_password()" value="change password" class="btn btn-primary" type="button">
+        <input ng-click="changePassword = !changePassword" value="change password" class="btn btn-primary" type="button">
+      </div>
+      <div class="text-center" ng-show="changePassword">
+        <form name="passForm">
+        <input ng-model="oldPassword" type="password" placeholder="Old password">
+        <input ng-model="newPassword1" type="password" placeholder="new password">
+        <input ng-model="newPassword2" type="password" placeholder="retype new password">
+        <p><input type="button" value="Save" ng-disabled="disablePasswordSave()" class="btn btn-primary" ng-click="updatePassword()"></p>
+      </form>
       </div>
       <p>form pristine: {{userForm.$pristine}}</p>
       <p>form dirty   : {{userForm.$dirty}}</p>

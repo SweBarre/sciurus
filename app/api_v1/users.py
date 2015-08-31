@@ -72,6 +72,27 @@ class SingleUser(Resource):
         db.session.commit()
         return jsonify({'status':'ok', 'user':user.to_dict()})
 
+class SetPassword(Resource):
+    method_decorators = [security.authenticated]
+    
+    def post(self, email):
+        if not ( email == security.current_user.email or \
+                security.authorized(AccessRights.USER_EDIT.value, domain=domain)):
+            abort(401, "Not Authorized")
+        json_request = request.get_json()
+        user = User.query.filter_by(email=email).first()
+        if not user:
+            abort(404)
+        if not (all (k in json_request for k in ( \
+                'oldPassword',
+                'newPassword'))):
+            abort(400, 'missing parameters')
+        if not user.verify_password(json_request['oldPassword']):
+            abort(401, "wrong password provided")
+        user.password = json_request['newPassword']
+        db.session.commit()
+        return jsonify({'status':'ok'})
 
 api.add_resource(Users, '/users')
 api.add_resource(SingleUser, '/users/<string:email>')
+api.add_resource(SetPassword, '/users/<string:email>/password')
