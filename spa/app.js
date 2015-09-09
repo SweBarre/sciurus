@@ -7,6 +7,11 @@ var sciurus = angular.module("sciurus", ['ngRoute', 'ngStorage', 'ui.bootstrap',
         templateUrl : 'dashboard.html',
         controller  : 'DashboardCtrl'
     })
+    
+ .when('/quarantine', {
+        templateUrl : 'quarantine.html',
+        controller  : 'QuarantineCtrl'
+    })
 
     .when('/login', {
         templateUrl : 'login.html',
@@ -23,16 +28,31 @@ var sciurus = angular.module("sciurus", ['ngRoute', 'ngStorage', 'ui.bootstrap',
         controller  : 'UsersCtrl'
     })
 
+    .when('/newuser', {
+        templateUrl : 'user.html',
+        controller  : 'NewUserCtrl'
+    })
+
     .when('/users/:userEmail', {
         templateUrl : 'user.html',
         controller  : 'UserDetailCtrl'
     })
 
+    .when('/domains', {
+        templateUrl : 'domains.html',
+        controller  : 'DomainsCtrl'
+    })
+    
+    .when('/domains/:domainName', {
+        templateUrl : 'domains.html',
+        controller  : 'DomainsCtrl'
+    })
+    
     .otherwise({
         redirectTo: '/'
     });
  }).
-
+    
  run(function($rootScope, $location, AuthService, $http) {
     $rootScope.$on( "$routeChangeStart", function(event, next, current) {
         if (!AuthService.isAuthenticated()) {

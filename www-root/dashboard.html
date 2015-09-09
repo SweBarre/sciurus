@@ -1,1 +1,64 @@
-<h1>Welcome {{ currentUser.email }} to {{ heading }}</h1>
+          <h1 class="page-header">Dashboard</h1>
+
+          <div class="row placeholders">
+            <div class="col-xs-6 col-sm-3 placeholder">
+              <img data-src="holder.js/200x200/auto/sky" class="img-responsive" alt="Generic placeholder thumbnail">
+              <h4>Label</h4>
+              <span class="text-muted">Something else</span>
+            </div>
+            <div class="col-xs-6 col-sm-3 placeholder">
+              <img data-src="holder.js/200x200/auto/vine" class="img-responsive" alt="Generic placeholder thumbnail">
+              <h4>Label</h4>
+              <span class="text-muted">Something else</span>
+            </div>
+            <div class="col-xs-6 col-sm-3 placeholder">
+              <img data-src="holder.js/200x200/auto/sky" class="img-responsive" alt="Generic placeholder thumbnail">
+              <h4>Label</h4>
+              <span class="text-muted">Something else</span>
+            </div>
+            <div class="col-xs-6 col-sm-3 placeholder">
+              <img data-src="holder.js/200x200/auto/vine" class="img-responsive" alt="Generic placeholder thumbnail">
+              <h4>Label</h4>
+              <span class="text-muted">Something else</span>
+            </div>
+          </div>
+
+          <h2 class="sub-header">Debug info</h2>
+          <div class="row">
+          	<div class="col-md-6">
+          		<div class="col-md-6">Token:</div>
+          		<div class="col-md-6">{{currentUser.token}}</div>
+          	</div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Testing</th>
+                  <th>DOMAIN_FULL</th>
+                  <th>DOMAIN_EDIT</th>
+                  <th>DOMAIN_READ</th>
+                  <th>USER_FULL</th>
+                  <th>USER_EDIT</th>
+                  <th>USER_READ</th>
+                  <th>AMAVIS_FULL</th>
+                  <th>AMAVIS_EDIT</th>
+                  <th>AMAVIS_READ</th>
+                  <th>QUARANTINE_FULL</th>
+                  <th>QUARANTINE_EDIT</th>
+                  <th>QUARANTINE_READ</th>               
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="ar in accessRights">
+                  <td>super: {{ar}}</td>
+                  <td ng-repeat="tar in accessRights">{{isAuthorized(ar)}}</td>
+                </tr>
+                 <tr ng-repeat="ar in accessRights">
+                  <td>rre.nu: {{ar}}</td>
+                  <td ng-repeat="tar in accessRights">{{isAuthorized(ar,"rre.nu")}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>

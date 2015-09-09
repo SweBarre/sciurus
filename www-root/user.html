@@ -15,21 +15,10 @@
       </div>
       <div class="text-center">
         <p>
-        <button ng-click="redirect('/quarantine/'+user.email)" class="btn btn-primary" type="button">
+        <button ng-hide="newUser" ng-click="redirect('/quarantine/'+user.email)" class="btn btn-primary" type="button">
           Quarantine <span class="badge">4</span>
         </button>
         </p>
-      </div>
-      <div class="text-center" ng-show="(isAuthorized('USER_EDIT') || currentUser.email==user.email)">
-        <input ng-click="changePassword = !changePassword" value="change password" class="btn btn-primary" type="button">
-      </div>
-      <div class="text-center" ng-show="changePassword">
-        <form name="passForm">
-        <input ng-model="oldPassword" type="password" placeholder="Old password">
-        <input ng-model="newPassword1" type="password" placeholder="new password">
-        <input ng-model="newPassword2" type="password" placeholder="retype new password">
-        <p><input type="button" value="Save" ng-disabled="disablePasswordSave()" class="btn btn-primary" ng-click="updatePassword()"></p>
-      </form>
       </div>
       <p>form pristine: {{userForm.$pristine}}</p>
       <p>form dirty   : {{userForm.$dirty}}</p>
@@ -41,6 +30,32 @@
       <h3>Personal info</h3>
 
       <form name="userForm" class="form-horizontal" role="form">
+        <div ng-show="newUser" class="form-group">
+          <label class="col-lg-3 control-label">Email:</label>
+          <div class="col-lg-4">
+            <input placeholder="user id" class="form-control" ng-change="userChanged()" ng-model="userID" ng-required type="text">
+          </div>
+          <div class="col-lg-4">
+            <select ng-change="userChanged()" name="domainName" ng-model="userDomain">
+              <option value="">select domain</option>
+              <option ng-repeat="domain in domains" value="{{domain.name}}">{{domain.name}}</option>
+            </select>
+          </div>
+        </div>
+        <div ng-show="newUser" class="form-group">
+          <label class="col-lg-3 control-label">Password:</label>
+          <div class="col-lg-4">
+            <input data-ng-model='user.password' type="password" name='password' placeholder='password' required>
+            <div ng-show="userForm.password.$error.required">Field required</div>
+          </div>
+          <div class="col-lg-4">
+            <input ng-model='user.password_verify' type="password" name='confirm_password' placeholder='confirm password' required data-password-verify="user.password">
+            <div ng-show="userForm.confirm_password.$error.required">
+              Field required!</div>
+            <div ng-show="userForm.confirm_password.$error.passwordVerify">
+              Fields are not equal!</div>
+          </div>
+        </div>
         <div class="form-group">
           <label class="col-lg-3 control-label">First name:</label>
           <div class="col-lg-8">
@@ -60,56 +75,47 @@
             <button ng-hide="user.enabled" ng-click="user.enabled=true; userForm.$setDirty()" ng-disabled="!currentUser.is_admin" class="btn btn-danger" type="button"> Disabled</button>
           </div>
         </div>
-        <div class="form-group">
-          <label class="col-lg-3 control-label">Email:</label>
-          <div class="col-lg-8">
-            <input class="form-control" value="janesemail@gmail.com" type="text">
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-lg-3 control-label">Time Zone:</label>
-          <div class="col-lg-8">
-            <div class="ui-select">
-              <select id="user_time_zone" class="form-control">
-                <option value="Hawaii">(GMT-10:00) Hawaii</option>
-                <option value="Alaska">(GMT-09:00) Alaska</option>
-                <option value="Pacific Time (US &amp; Canada)">(GMT-08:00) Pacific Time (US &amp; Canada)</option>
-                <option value="Arizona">(GMT-07:00) Arizona</option>
-                <option value="Mountain Time (US &amp; Canada)">(GMT-07:00) Mountain Time (US &amp; Canada)</option>
-                <option value="Central Time (US &amp; Canada)" selected="selected">(GMT-06:00) Central Time (US &amp; Canada)</option>
-                <option value="Eastern Time (US &amp; Canada)">(GMT-05:00) Eastern Time (US &amp; Canada)</option>
-                <option value="Indiana (East)">(GMT-05:00) Indiana (East)</option>
-              </select>
-            </div>
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-md-3 control-label">Username:</label>
-          <div class="col-md-8">
-            <input class="form-control" value="janeuser" type="text">
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-md-3 control-label">Password:</label>
-          <div class="col-md-8">
-            <input class="form-control" value="11111122333" type="password">
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-md-3 control-label">Confirm password:</label>
-          <div class="col-md-8">
-            <input class="form-control" value="11111122333" type="password">
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-md-3 control-label"></label>
-          <div class="col-md-8">
-            <input ng-hide="userForm.$pristine" ng-click="save()" class="btn btn-success" value="Save Changes" type="button">
-            <span></span>
-            <input ng-show="userForm.$dirty" ng-click="reset()" class="btn btn-primary" value="Reset" type="button">
-          </div>
-        </div>
       </form>
     </div>
   </div> <!-- row -->
-</div> <!-- container -->
+  <div class="row">
+    <div>Administration:</div>
+    <label class="col-md-3 control-label"></label>
+    <div class="col-md-8>">
+    </div>
+    <div class="form-group">
+      <label class="col-md-3 control-label"></label>
+      <div class="col-md-8">
+        <input ng-hide="userForm.$pristine || newUser" ng-click="save()" class="btn btn-success" value="Save Changes" type="button" />
+        <input ng-show="userForm.$dirty && newUser" ng-click="save()" class="btn btn-success" value="Add user" type="button" />
+        <input ng-show="userForm.$dirty" ng-click="reset()" class="btn btn-primary" value="Reset" type="button">
+      </div>
+    </div>
+  </div>
+</div> <!-- row -->
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th class="col-md-8">Domain</th>
+        <th class="col-md-3">Access rights</th>
+      </tr>
+    </thead>
+    <tbody>
+    <tr ng-show="user.super_admin">
+    	<th>Super admin</th>
+    	<td><span class="label label-default" ng-repeat="access in currentUser.super_admin">{{access}}</label></td> 	
+    </tr>
+    <tr ng-repeat="(domain, access) in user.admin">
+    	<td >{{domain}}</td>
+        <td>
+          <span ng-repeat="ac in access" class="tag label label-success">
+            <span>{{ ac }}</span>
+              <a><i class="remove glyphicon glyphicon-remove-sign glyphicon-white"></i></a> 
+            </span>
+        </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+

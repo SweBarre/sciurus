@@ -1,0 +1,29 @@
+<!doctype html>
+<html ng-app>
+<head>
+<script src="http://code.angularjs.org/1.1.2/angular.min.js"></script>
+<script type="text/javascript">
+function Ctrl($scope) {
+  var initial = {text: 'initial value'};
+  var check = "USER_EDIT";
+  ($scope.check, $scope.right) = check.split("_");
+  $scope.myModel = angular.copy(initial);
+  $scope.revert = function() {
+    $scope.myModel = angular.copy(initial);
+    $scope.myForm.$setPristine();
+  }
+}
+</script>
+</head>
+<body>
+<form name="myForm" ng-controller="Ctrl">
+  myModel.text: <input name="input" ng-model="myModel.text">
+  <p>myModel.text = {{myModel.text}}</p>
+  <p>$pristine = {{myForm.$pristine}}</p>
+  <p>$dirty = {{myForm.$dirty}}</p>
+  <button ng-click="revert()">Set pristine</button>
+  <p>check = {{ check }}</p>
+  <p>right = {{right}}</p>
+</form>
+</body>
+</html>

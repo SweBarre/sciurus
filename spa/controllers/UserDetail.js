@@ -1,10 +1,15 @@
-sciurus.controller('UserDetailCtrl', function($scope ,$routeParams, AuthService, Flash, User) {
+sciurus.controller('UserDetailCtrl', function($scope ,$routeParams, AuthService, Flash, User, Domain) {
 
     var $initialUser = {};
 
     $scope.changePassword = false;
     $scope.newPassword1 = '';
     $scope.newPassword2 = '';
+    
+    Domain.query(function(data) {
+        $scope.domains = data.domains;
+    });
+
 
     User.get({email:$routeParams.userEmail}, 
         function(data) {

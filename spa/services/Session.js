@@ -3,6 +3,7 @@ sciurus.service('Session', function ($sessionStorage, $http, CONFIG) {
     this.create = function (user, token) {
         this.token = token;
         this.user = user;
+        this.user.token = token;
         $sessionStorage.token = token;
         $sessionStorage.user = user;
         $http.defaults.headers.common['X-Auth-Token'] = token;

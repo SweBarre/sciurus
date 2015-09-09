@@ -22,3 +22,4 @@ def authenticated(func):
 from . import login
 from . import users
 from . import app
+from . import domains

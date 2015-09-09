@@ -19,9 +19,10 @@ sciurus.controller('ApplicationController', function ($scope, $rootScope, $locat
 
 
     $scope.adminMenu = [
-        { caption: 'Domains', link: '#/' },
-        { caption: 'Users', link: '#/users', },
-        { caption: 'Amavis', link: '#/' }
+        { caption: 'Domains', accsess: 'DOMAIN_READ', link: '#/' },
+        { caption: 'Users', access: 'USERS_READ', link: '#/users' },
+        { caption: 'New User', access: 'USERS_EDIT', link: '#/newuser' },
+        { caption: 'Amavis', access: 'AMAVIS_READ', link: '#/' }
     ];
 
     $scope.filterKeyword = "";
@@ -29,6 +30,18 @@ sciurus.controller('ApplicationController', function ($scope, $rootScope, $locat
     $scope.redirect = function(path) {
         console.log('redirecting: '+path);
         $location.path(path);
+    };
+
+    $scope.isActive = function(path) {
+        var current = $location.path().substring(1).split('/')[0];
+        return path === current ? "active" : "";
+    };
+
+    $scope.currentDomain = function() {
+        if($location.path().substring(1).split('/')[0] == "domains") {
+            return $location.path().substring(1).split('/')[1];
+        }
+        return false;
     };
 
 });
